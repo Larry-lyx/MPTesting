@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Interfaces/OnlineSessionInterface.h"
 #include "Logging/LogMacros.h"
 #include "MPTestingCharacter.generated.h"
 
@@ -101,5 +102,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void CallClientTravel(const FString& Address);
+
+public:
+	// Pointer to the online session interface
+	IOnlineSessionPtr OnlineSessionInterface;
 };
 

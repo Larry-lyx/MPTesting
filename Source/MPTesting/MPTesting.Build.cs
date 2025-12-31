@@ -18,7 +18,9 @@ public class MPTesting : ModuleRules
 			"StateTreeModule",
 			"GameplayStateTreeModule",
 			"UMG",
-			"Slate"
+			"Slate" ,
+			"OnlineSubsystemSteam" ,
+			"OnlineSubsystem"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] { });
