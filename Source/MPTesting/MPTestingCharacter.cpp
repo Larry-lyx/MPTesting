@@ -14,9 +14,11 @@
 #include "OnlineSessionSettings.h"
 #include "OnlineSubsystem.h"
 #include "Kismet/GameplayStatics.h"
+#include "Online/OnlineSessionNames.h"
 
 AMPTestingCharacter::AMPTestingCharacter():
-	CreateSessionCompleteDelegate(FOnCreateSessionCompleteDelegate::CreateUObject(this , &ThisClass::OnCreateSessionComplete))
+	CreateSessionCompleteDelegate(FOnCreateSessionCompleteDelegate::CreateUObject(this , &ThisClass::OnCreateSessionComplete)) ,
+	FindSessionsCompleteDelegate(FOnFindSessionsCompleteDelegate::CreateUObject(this , &ThisClass::OnFindSessionsComplete)) 
 {
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -203,6 +205,21 @@ void AMPTestingCharacter::CreateGameSession()
 	
 }
 
+void AMPTestingCharacter::JoinGameSession()
+{
+	if (!OnlineSessionInterface.IsValid()) return;
+
+	OnlineSessionInterface->AddOnFindSessionsCompleteDelegate_Handle(FindSessionsCompleteDelegate);
+
+	SessionSearch = MakeShareable(new FOnlineSessionSearch());
+	SessionSearch->MaxSearchResults = 10000;
+	SessionSearch->bIsLanQuery = false;
+	SessionSearch->QuerySettings.Set(SEARCH_LOBBIES , true , EOnlineComparisonOp::Equals);
+
+	const ULocalPlayer* LocalPlayer = GetWorld()->GetFirstLocalPlayerFromController();
+	OnlineSessionInterface->FindSessions(*LocalPlayer->GetPreferredUniqueNetId() , SessionSearch.ToSharedRef());
+}
+
 void AMPTestingCharacter::OnCreateSessionComplete(FName SessionName, bool bWasSuccessful)
 {
 	if (bWasSuccessful)
@@ -225,6 +242,24 @@ void AMPTestingCharacter::OnCreateSessionComplete(FName SessionName, bool bWasSu
 				15.f ,
 				FColor::Red ,
 				FString(TEXT("Failed to Create Session!")));
+		}
+	}
+}
+
+void AMPTestingCharacter::OnFindSessionsComplete(bool bWasSuccessful)
+{
+	for (auto result : SessionSearch->SearchResults)
+	{
+		FString Id = result.GetSessionIdStr();
+		FString User = result.Session.OwningUserName;
+
+		if (GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(
+				-1 ,
+				15.f ,
+				FColor::Cyan ,
+				FString::Printf(TEXT("Id :%s , User : %s") , *Id , *User));
 		}
 	}
 }
