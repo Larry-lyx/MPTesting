@@ -30,7 +30,7 @@ protected:
 
 	void OnFindSessions(const TArray<FOnlineSessionSearchResult>& SessionResults , bool bWasSuccessful);
 
-	void OnJoinSession(EOnJoinSessionCompleteResult::Type);
+	void OnJoinSession(EOnJoinSessionCompleteResult::Type Result);
 
 	UFUNCTION()
 	void OnDestroySession(bool bWasSuccessful);
