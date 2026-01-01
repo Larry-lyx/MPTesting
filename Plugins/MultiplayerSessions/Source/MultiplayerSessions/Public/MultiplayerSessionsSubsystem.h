@@ -12,6 +12,9 @@
 /**
  * 
  */
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMultiPlayerOnCreateSessionComplete , bool , bWasSuccessful);
+
 UCLASS()
 class MULTIPLAYERSESSIONS_API UMultiplayerSessionsSubsystem : public UGameInstanceSubsystem
 {
@@ -25,6 +28,8 @@ public:
 	void JoinSession(const FOnlineSessionSearchResult& SessionResult);
 	void DestroySession();
 	void StartSession();
+
+	FMultiPlayerOnCreateSessionComplete MultiPlayerOnCreateSessionComplete;
 
 protected:
 	void OnCreateSessionComplete(FName SessionName, bool bWasSuccessful);
