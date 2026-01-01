@@ -14,6 +14,10 @@
  */
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMultiPlayerOnCreateSessionComplete , bool , bWasSuccessful);
+DECLARE_MULTICAST_DELEGATE_TwoParams(FMultiPlayerOnFindSessionsComplete , const TArray<FOnlineSessionSearchResult>& SessionResults , bool bWasSuccessful);
+DECLARE_MULTICAST_DELEGATE_OneParam(FMultiPlayerOnJoinSessionComplete , EOnJoinSessionCompleteResult::Type Result);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMultiPlayerOnDestroySessionComplete , bool , bWasSuccessful);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMultiPlayerOnStartSessionComplete , bool , bWasSuccessful);
 
 UCLASS()
 class MULTIPLAYERSESSIONS_API UMultiplayerSessionsSubsystem : public UGameInstanceSubsystem
@@ -30,6 +34,10 @@ public:
 	void StartSession();
 
 	FMultiPlayerOnCreateSessionComplete MultiPlayerOnCreateSessionComplete;
+	FMultiPlayerOnFindSessionsComplete MultiPlayerOnFindSessionsComplete;
+	FMultiPlayerOnJoinSessionComplete MultiPlayerOnJoinSessionComplete;
+	FMultiPlayerOnDestroySessionComplete MultiPlayerOnDestroySessionComplete;
+	FMultiPlayerOnStartSessionComplete MultiPlayerOnStartSessionComplete;
 
 protected:
 	void OnCreateSessionComplete(FName SessionName, bool bWasSuccessful);

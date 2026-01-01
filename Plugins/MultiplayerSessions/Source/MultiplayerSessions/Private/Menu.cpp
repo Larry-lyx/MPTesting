@@ -38,6 +38,10 @@ void UMenu::MenuSetup(int32 NumberOfPublicConnections , FString TypeOfMatch )
 	if (MultiplayerSessionSubsystem)
 	{
 		MultiplayerSessionSubsystem->MultiPlayerOnCreateSessionComplete.AddDynamic(this , &ThisClass::OnCreateSession);
+		MultiplayerSessionSubsystem->MultiPlayerOnFindSessionsComplete.AddUObject(this , &ThisClass::OnFindSessions);
+		MultiplayerSessionSubsystem->MultiPlayerOnJoinSessionComplete.AddUObject(this , &ThisClass::OnJoinSession);
+		MultiplayerSessionSubsystem->MultiPlayerOnDestroySessionComplete.AddDynamic(this , &ThisClass::OnDestroySession);
+		MultiplayerSessionSubsystem->MultiPlayerOnStartSessionComplete.AddDynamic(this , &ThisClass::OnStarSession);
 	}
 }
 
@@ -91,6 +95,22 @@ void UMenu::OnCreateSession(bool bWasSuccessful)
 			FColor::Red ,
 			FString(TEXT("Failed to Create Session!")));
 	}
+}
+
+void UMenu::OnFindSessions(const TArray<FOnlineSessionSearchResult>& SessionResults, bool bWasSuccessful)
+{
+}
+
+void UMenu::OnJoinSession(EOnJoinSessionCompleteResult::Type)
+{
+}
+
+void UMenu::OnDestroySession(bool bWasSuccessful)
+{
+}
+
+void UMenu::OnStarSession(bool bWasSuccessful)
+{
 }
 
 void UMenu::HostButtonClicked()
