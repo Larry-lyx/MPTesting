@@ -61,6 +61,7 @@ AMPTestingCharacter::AMPTestingCharacter():
 	{
 		OnlineSessionInterface = OnlineSubsystem->GetSessionInterface();
 
+		/*
 		if (GEngine)
 		{
 			GEngine->AddOnScreenDebugMessage(
@@ -70,6 +71,7 @@ AMPTestingCharacter::AMPTestingCharacter():
 				FString::Printf(TEXT("Found Subsystem : %s") , *OnlineSubsystem->GetSubsystemName().ToString())
 				);
 		}
+		*/
 	}
 }
 
