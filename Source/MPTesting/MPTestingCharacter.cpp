@@ -199,7 +199,7 @@ void AMPTestingCharacter::CreateGameSession()
 	SessionSettings->bShouldAdvertise = true;
 	SessionSettings->bUsesPresence = true;
 	SessionSettings->bUseLobbiesIfAvailable = true;
-
+	
 	SessionSettings->Set(FName("MatchType") , FString("FreeForAll") , EOnlineDataAdvertisementType::ViaOnlineServiceAndPing);
 	
 	const ULocalPlayer* LocalPlayer = GetWorld()->GetFirstLocalPlayerFromController();
