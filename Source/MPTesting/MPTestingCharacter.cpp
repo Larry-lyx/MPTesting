@@ -198,6 +198,11 @@ void AMPTestingCharacter::CreateGameSession()
 	SessionSettings->bAllowJoinViaPresence = true;
 	SessionSettings->bShouldAdvertise = true;
 	SessionSettings->bUsesPresence = true;
+
+	// Have to use this command for UE 5.6
+	// But this will cause the client travel to the default map , not the lobby map
+	// The Solution is to use Plugin Steam Sockets , and change Config due to the documentation
+	
 	SessionSettings->bUseLobbiesIfAvailable = true;
 	
 	SessionSettings->Set(FName("MatchType") , FString("FreeForAll") , EOnlineDataAdvertisementType::ViaOnlineServiceAndPing);
